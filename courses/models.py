@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Course(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     name = models.CharField(max_length=100)
     modules = models.ManyToManyField("Module", related_name="course_modules")
 
@@ -13,7 +13,7 @@ class Course(models.Model):
 
 
 class Module(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     course = models.ForeignKey("Course", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     lectures = models.ManyToManyField(
@@ -24,7 +24,7 @@ class Module(models.Model):
 
 
 class Lecture(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     module = models.ForeignKey("Module", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     course_outcome = models.TextField()

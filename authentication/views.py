@@ -7,6 +7,12 @@ from authentication.models import User, Student_Profile, Faculty_Profile
 from academics.models import Section, Semester
 from django.shortcuts import get_object_or_404
 from academics.models import Department
+from .serializers import (
+    LoginSerializer,
+    UserSerializer,
+    Student_ProfileSerializer,
+    Faculty_ProfileSerializer,
+)
 
 
 class Login(views.APIView):
@@ -14,23 +20,21 @@ class Login(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        code = request.data['code']
-        password = request.data['password']
+        serialized = LoginSerializer(data=request.data)
 
-        user = authenticate(request, username=code, password=password)
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        user = authenticate(
+            username=serialized.data["code"], password=serialized.data["password"])
 
         if user is None:
-            return response.Response(Message.unauthorized('Invalid credentials'))
+            return Message.error('Invalid credentials.')
 
         refresh = RefreshToken.for_user(user)
         access = str(refresh.access_token)
 
-        res = response.Response(
-            {"refresh": str(refresh), "access": access}, status=status.HTTP_200_OK)
-        res.set_cookie('refresh', str(refresh),
-                       httponly=True, secure=True, samesite='None')
-
-        return res
+        return Message.success('Login successful', {"refresh": str(refresh), "access": access})
 
 
 class AddStudent(views.APIView):
@@ -38,24 +42,20 @@ class AddStudent(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        section = get_object_or_404(Section, id=request.data['section'])
-        semester = get_object_or_404(
-            Semester, id=request.data['current_semester'])
+        serialized = UserSerializer(data=request.data)
 
-        user = User.objects.create_user(
-            code=request.data['code'],
-            password=request.data['password'],
-            is_active=True,
-            is_staff=False
-        )
-        Student_Profile.objects.create(
-            user=user,
-            name=request.data['name'],
-            email=request.data['email'],
-            gender=request.data['gender'],
-            section=section,
-            current_semester=semester,
-        )
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        user = serialized.save()
+
+        student_serialized = Student_ProfileSerializer(data=request.data)
+
+        if not student_serialized.is_valid():
+            return Message.error(student_serialized.errors)
+
+        student_serialized.save(user=user)
+
         return Message.success('Student added successfully')
 
 
@@ -64,20 +64,18 @@ class AddFaculty(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        department = get_object_or_404(
-            Department, id=request.data['department'])
+        serialized = UserSerializer(data=request.data)
 
-        user = User.objects.create_user(
-            code=request.data['code'],
-            password=request.data['password'],
-            is_active=True,
-            is_staff=False
-        )
-        Faculty_Profile.objects.create(
-            user=user,
-            name=request.data['name'],
-            email=request.data['email'],
-            gender=request.data['gender'],
-            department=department,
-        )
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        user = serialized.save()
+
+        faculty_serialized = Faculty_ProfileSerializer(data=request.data)
+
+        if not faculty_serialized.is_valid():
+            return Message.error(faculty_serialized.errors)
+
+        faculty_serialized.save(user=user)
+
         return Message.success('Faculty added successfully')

@@ -1,7 +1,7 @@
 import requests
 
 BASE_URL = 'http://localhost:8000'
-Token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzOTY0MTAxLCJpYXQiOjE3NDMzNTkzMDEsImp0aSI6IjZhMGY5MzZmZThlNTQ2MWZiMGZhODc3ZGY4YWZjOTEzIiwidXNlcl9pZCI6MX0.nOmpMxnjh0I0GTMCDK-rliglva8L170iTdY2sl2IssQ'
+Token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ0MDM3ODgyLCJpYXQiOjE3NDM0MzMwODIsImp0aSI6ImE2MDZmYmZiZmRhMDQ5ODg5MWZjZThiNWFmMzI3NjBiIiwidXNlcl9pZCI6MX0.yDQfj6a9auwue_9yhAodjwlrOKXeR94CSNfi6XaUY5E'
 
 
 # Get access token
@@ -19,7 +19,7 @@ add_department = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-department/',
     "data": {
-        "id": "BCA(Honors)",
+        "id": "BCA(H)",
         "name": "Bachalore of Computer Application (Honors)"
     },
     "headers": {
@@ -32,9 +32,9 @@ add_batch_1 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-batch/',
     "data": {
-        "id": "BCA(Honors)-2023",
+        "id": "BCA(H)-2023",
         "name": "2023",
-        "department": "BCA(Honors)"
+        "department": "BCA(H)"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -44,9 +44,9 @@ add_batch_2 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-batch/',
     "data": {
-        "id": "BCA(Honors)-2024",
+        "id": "BCA(H)-2024",
         "name": "2024",
-        "department": "BCA(Honors)"
+        "department": "BCA(H)"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -58,9 +58,9 @@ add_section_1 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-section/',
     "data": {
-        "id": "BCA(Honors)-2023-A",
+        "id": "BCA(H)-2023-A",
         "name": "A",
-        "batch": "BCA(Honors)-2023"
+        "batch": "BCA(H)-2023"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -70,9 +70,9 @@ add_section_2 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-section/',
     "data": {
-        "id": "BCA(Honors)-2023-B",
+        "id": "BCA(H)-2023-B",
         "name": "B",
-        "batch": "BCA(Honors)-2023"
+        "batch": "BCA(H)-2023"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -82,9 +82,9 @@ add_section_3 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-section/',
     "data": {
-        "id": "BCA(Honors)-2024-A",
+        "id": "BCA(H)-2024-A",
         "name": "A",
-        "batch": "BCA(Honors)-2024"
+        "batch": "BCA(H)-2024"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -94,9 +94,9 @@ add_section_4 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-section/',
     "data": {
-        "id": "BCA(Honors)-2024-B",
+        "id": "BCA(H)-2024-B",
         "name": "B",
-        "batch": "BCA(Honors)-2024"
+        "batch": "BCA(H)-2024"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -108,9 +108,9 @@ add_semester_1 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-semester/',
     "data": {
-        "id": "BCA(Honors)-2023-I",
+        "id": "BCA(H)-2023-1",
         "name": "1",
-        "batch": "BCA(Honors)-2023"
+        "batch": "BCA(H)-2023"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -120,9 +120,9 @@ add_semester_2 = {
     "method": "POST",
     "url": f'{BASE_URL}/academics/add-semester/',
     "data": {
-        "id": "BCA(Honors)-2024-I",
+        "id": "BCA(H)-2024-1",
         "name": "1",
-        "batch": "BCA(Honors)-2024"
+        "batch": "BCA(H)-2024"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -139,8 +139,8 @@ add_student_1 = {
         "name": "Rahul Das",
         "email": "bwubca23406@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2023-A",
-        "current_semester": "BCA(Honors)-2023-I"
+        "section": "BCA(H)-2023-A",
+        "current_semester": "BCA(H)-2023-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -155,8 +155,8 @@ add_student_2 = {
         "name": "Rohit Das",
         "email": "bwubca23407@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2023-A",
-        "current_semester": "BCA(Honors)-2023-I"
+        "section": "BCA(H)-2023-A",
+        "current_semester": "BCA(H)-2023-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -171,8 +171,8 @@ add_student_3 = {
         "name": "Mohit Das",
         "email": "bwubca23408@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2023-B",
-        "current_semester": "BCA(Honors)-2023-I"
+        "section": "BCA(H)-2023-B",
+        "current_semester": "BCA(H)-2023-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -187,8 +187,8 @@ add_student_4 = {
         "name": "Jitesh Das",
         "email": "bwubca23409@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2023-B",
-        "current_semester": "BCA(Honors)-2023-I"
+        "section": "BCA(H)-2023-B",
+        "current_semester": "BCA(H)-2023-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -203,8 +203,8 @@ add_student_5 = {
         "name": "Ritesh Das",
         "email": "bwubca24410@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2024-A",
-        "current_semester": "BCA(Honors)-2024-I"
+        "section": "BCA(H)-2024-A",
+        "current_semester": "BCA(H)-2024-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -219,8 +219,8 @@ add_student_6 = {
         "name": "Nitesh Das",
         "email": "bwubca24411@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2024-A",
-        "current_semester": "BCA(Honors)-2024-I"
+        "section": "BCA(H)-2024-A",
+        "current_semester": "BCA(H)-2024-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -235,8 +235,8 @@ add_student_7 = {
         "name": "Nilesh Das",
         "email": "bwubca24412@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2024-B",
-        "current_semester": "BCA(Honors)-2024-I"
+        "section": "BCA(H)-2024-B",
+        "current_semester": "BCA(H)-2024-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -251,8 +251,8 @@ add_student_8 = {
         "name": "Milesh Das",
         "email": "bwubca24413@brainwareuniversity.ac.in",
         "gender": "Male",
-        "section": "BCA(Honors)-2024-B",
-        "current_semester": "BCA(Honors)-2024-I"
+        "section": "BCA(H)-2024-B",
+        "current_semester": "BCA(H)-2024-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -269,7 +269,7 @@ add_faculty_1 = {
         "name": "Prof. Rahul Das",
         "email": "bwubca001@brainwareuniversity.ac.in",
         "gender": "Male",
-        "department": "BCA(Honors)"
+        "department": "BCA(H)"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -284,7 +284,7 @@ add_faculty_2 = {
         "name": "Prof. Hitesh Das",
         "email": "bwubca002@brainwareuniversity.ac.in",
         "gender": "Male",
-        "department": "BCA(Honors)"
+        "department": "BCA(H)"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -299,7 +299,7 @@ add_faculty_3 = {
         "name": "Prof. Nitish Das",
         "email": "bwubca003@brainwareuniversity.ac.in",
         "gender": "Male",
-        "department": "BCA(Honors)"
+        "department": "BCA(H)"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -314,7 +314,7 @@ add_faculty_4 = {
         "name": "Prof. Bitan Das",
         "email": "bwubca004@brainwareuniversity.ac.in",
         "gender": "Male",
-        "department": "BCA(Honors)"
+        "department": "BCA(H)"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -1043,7 +1043,7 @@ add_course_1_semester_1 = {
     "url": f'{BASE_URL}/academics/add-course-to-semester/',
     "data": {
         "course": "BCA47111",
-        "semester": "BCA(Honors)-2023-I"
+        "semester": "BCA(H)-2023-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -1054,7 +1054,7 @@ add_course_2_semester_1 = {
     "url": f'{BASE_URL}/academics/add-course-to-semester/',
     "data": {
         "course": "BCA40202",
-        "semester": "BCA(Honors)-2023-I"
+        "semester": "BCA(H)-2023-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -1065,7 +1065,7 @@ add_course_3_semester_1 = {
     "url": f'{BASE_URL}/academics/add-course-to-semester/',
     "data": {
         "course": "BCA49112",
-        "semester": "BCA(Honors)-2024-I"
+        "semester": "BCA(H)-2024-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -1076,7 +1076,7 @@ add_course_4_semester_1 = {
     "url": f'{BASE_URL}/academics/add-course-to-semester/',
     "data": {
         "course": "BCA47113",
-        "semester": "BCA(Honors)-2024-I"
+        "semester": "BCA(H)-2024-1"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -1174,7 +1174,7 @@ def fetch(config):
 # print(fetch(batch_2_add_lecture_to_module_8))
 # print(fetch(batch_2_add_module_to_course_3))
 # print(fetch(batch_2_add_module_to_course_4))
-# print(fetch(add_course_1_semester_1))
-# print(fetch(add_course_2_semester_1))
+print(fetch(add_course_1_semester_1))
+print(fetch(add_course_2_semester_1))
 print(fetch(add_course_3_semester_1))
-# print(fetch(add_course_4_semester_1))
+print(fetch(add_course_4_semester_1))

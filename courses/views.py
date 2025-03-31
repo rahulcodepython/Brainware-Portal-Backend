@@ -3,6 +3,7 @@ from backend.message import Message
 from backend.utils import catch_exception
 from django.shortcuts import get_object_or_404
 from .models import Course, Module, Lecture
+from .serializers import CourseSerializer, ModuleSerializer, LectureSerializer
 
 
 class CreateCourse(views.APIView):
@@ -10,10 +11,13 @@ class CreateCourse(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        Course.objects.create(
-            id=request.data["id"],
-            name=request.data["name"]
-        )
+        serialized = CourseSerializer(data=request.data)
+
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
         return Message.success("Course created successfully.")
 
 
@@ -22,13 +26,13 @@ class CreateModule(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, id=request.data["course"])
+        serialized = ModuleSerializer(data=request.data)
 
-        Module.objects.create(
-            id=request.data["id"],
-            name=request.data["name"],
-            course=course
-        )
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
         return Message.success("Module created successfully.")
 
 
@@ -37,14 +41,13 @@ class CreateLecture(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        module = get_object_or_404(Module, id=request.data["module"])
+        serialized = LectureSerializer(data=request.data)
 
-        Lecture.objects.create(
-            id=request.data["id"],
-            name=request.data["name"],
-            course_outcome=request.data["course_outcome"],
-            module=module
-        )
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
         return Message.success("Lecture created successfully.")
 
 

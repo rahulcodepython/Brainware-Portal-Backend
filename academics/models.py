@@ -5,7 +5,7 @@ from courses.models import Course
 
 
 class Department(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -13,7 +13,7 @@ class Department(models.Model):
 
 
 class Batch(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     department = models.ForeignKey("Department", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
@@ -22,7 +22,7 @@ class Batch(models.Model):
 
 
 class Section(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     batch = models.ForeignKey("Batch", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
@@ -31,7 +31,7 @@ class Section(models.Model):
 
 
 class Semester(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     batch = models.ForeignKey("Batch", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
@@ -40,7 +40,7 @@ class Semester(models.Model):
 
 
 class Semester_Course(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
     semester = models.ForeignKey("Semester", on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, related_name="semester_courses")
 

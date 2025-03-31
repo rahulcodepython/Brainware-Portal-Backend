@@ -1,21 +1,29 @@
-from rest_framework import views, response, permissions
+from rest_framework import views, permissions
 from backend.message import Message
 from backend.utils import catch_exception
-from .models import Department, Batch, Section, Semester, Semester_Course, Course
+from .models import Semester_Course, Course
 from django.shortcuts import get_object_or_404
+from .serializers import (
+    DepartmentSerializer,
+    BatchSerializer,
+    SectionSerializer,
+    SemesterSerializer,
+)
+
 
 # Creating new Department api
-
-
 class AddDepartment(views.APIView):
     permission_classes = [permissions.IsAdminUser]
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        Department.objects.get_or_create(
-            id=request.data['id'],
-            name=request.data['name'],
-        )
+        serialized = DepartmentSerializer(data=request.data)
+
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
         return Message.success('Department added successfully')
 
 
@@ -25,14 +33,13 @@ class AddBatch(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        department = get_object_or_404(
-            Department, id=request.data['department'])
+        serialized = BatchSerializer(data=request.data)
 
-        Batch.objects.get_or_create(
-            id=request.data['id'],
-            name=request.data['name'],
-            department=department,
-        )
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
         return Message.success('Batch added successfully')
 
 
@@ -42,13 +49,13 @@ class AddSection(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        batch = get_object_or_404(Batch, id=request.data['batch'])
+        serialized = SectionSerializer(data=request.data)
 
-        Section.objects.get_or_create(
-            id=request.data['id'],
-            name=request.data['name'],
-            batch=batch,
-        )
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
         return Message.success('Section added successfully')
 
 
@@ -58,22 +65,21 @@ class AddSemester(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        batch = get_object_or_404(Batch, id=request.data['batch'])
+        serialized = SemesterSerializer(data=request.data)
 
-        semester = Semester.objects.get_or_create(
-            id=request.data['id'],
-            name=request.data['name'],
-            batch=batch,
-        )
-        Semester_Course.objects.get_or_create(
-            id=request.data['id'],
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        semester = serialized.save()
+
+        Semester_Course.objects.create(
+            id=serialized.data['id'],
             semester=semester,
         )
         return Message.success('Semester added successfully')
 
+
 # Creating new Course to Semester api
-
-
 class AddCourseToSemester(views.APIView):
     permission_classes = [permissions.IsAdminUser]
 
