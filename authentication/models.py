@@ -19,8 +19,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
+    code = models.CharField(max_length=20, unique=True, primary_key=True)
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True)
+        User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     gender = models.CharField(max_length=10, choices=(

@@ -8,4 +8,6 @@ urlpatterns = [
     path('add-semester/', views.AddSemester.as_view(), name='add_semester'),
     path('add-course-to-semester/', views.AddCourseToSemester.as_view(),
          name='add_course_to_semester'),
+    path('add-sections-to-semester/', views.AddSectionsToSemester.as_view(),
+         name='add_sections_to_semester'),
 ]

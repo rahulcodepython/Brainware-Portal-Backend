@@ -1,7 +1,7 @@
 import requests
 
 BASE_URL = 'http://localhost:8000'
-Token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ0MDM3ODgyLCJpYXQiOjE3NDM0MzMwODIsImp0aSI6ImE2MDZmYmZiZmRhMDQ5ODg5MWZjZThiNWFmMzI3NjBiIiwidXNlcl9pZCI6MX0.yDQfj6a9auwue_9yhAodjwlrOKXeR94CSNfi6XaUY5E'
+Token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ0MDkyODM2LCJpYXQiOjE3NDM0ODgwMzYsImp0aSI6ImMxNDAxMzZjMGJkMTQ3NThhMTQwN2JjNTQwNGNjNWQ0IiwidXNlcl9pZCI6MX0.gS1f9jUP5YMnq9Yh0-WDIZTsKKF5stgicGtfxnTm4yw'
 
 
 # Get access token
@@ -123,6 +123,52 @@ add_semester_2 = {
         "id": "BCA(H)-2024-1",
         "name": "1",
         "batch": "BCA(H)-2024"
+    },
+    "headers": {
+        'Authorization': f"Bearer {Token}"
+    }
+}
+
+# Add sections to semester
+add_section_to_semester_1 = {
+    "method": "POST",
+    "url": f'{BASE_URL}/academics/add-sections-to-semester/',
+    "data": {
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-A"
+    },
+    "headers": {
+        'Authorization': f"Bearer {Token}"
+    }
+}
+add_section_to_semester_2 = {
+    "method": "POST",
+    "url": f'{BASE_URL}/academics/add-sections-to-semester/',
+    "data": {
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-B"
+    },
+    "headers": {
+        'Authorization': f"Bearer {Token}"
+    }
+}
+add_section_to_semester_3 = {
+    "method": "POST",
+    "url": f'{BASE_URL}/academics/add-sections-to-semester/',
+    "data": {
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-A"
+    },
+    "headers": {
+        'Authorization': f"Bearer {Token}"
+    }
+}
+add_section_to_semester_4 = {
+    "method": "POST",
+    "url": f'{BASE_URL}/academics/add-sections-to-semester/',
+    "data": {
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-B"
     },
     "headers": {
         'Authorization': f"Bearer {Token}"
@@ -1083,6 +1129,227 @@ add_course_4_semester_1 = {
     }
 }
 
+class_routine_schedules = [
+    {
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-A",
+        "course": "BCA49112",
+        "faculty": "BWU/BCA/001",
+        "room": "R101"
+    },
+    {
+        "day": "Monday",
+        "start_time": "10:15",
+        "end_time": "11:15",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-B",
+        "course": "BCA49112",
+        "faculty": "BWU/BCA/002",
+        "room": "R102"
+    },
+    {
+        "day": "Monday",
+        "start_time": "11:30",
+        "end_time": "12:30",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-A",
+        "course": "BCA47111",
+        "faculty": "BWU/BCA/003",
+        "room": "R103"
+    },
+    {
+        "day": "Monday",
+        "start_time": "14:00",
+        "end_time": "15:00",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-B",
+        "course": "BCA47111",
+        "faculty": "BWU/BCA/004",
+        "room": "R104"
+    },
+    {
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-A",
+        "course": "BCA47113",
+        "faculty": "BWU/BCA/001",
+        "room": "R101"
+    },
+    {
+        "day": "Tuesday",
+        "start_time": "10:15",
+        "end_time": "11:15",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-B",
+        "course": "BCA47113",
+        "faculty": "BWU/BCA/002",
+        "room": "R102"
+    },
+    {
+        "day": "Tuesday",
+        "start_time": "11:30",
+        "end_time": "12:30",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-A",
+        "course": "BCA40202",
+        "faculty": "BWU/BCA/003",
+        "room": "R103"
+    },
+    {
+        "day": "Tuesday",
+        "start_time": "14:00",
+        "end_time": "15:00",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-B",
+        "course": "BCA40202",
+        "faculty": "BWU/BCA/004",
+        "room": "R104"
+    },
+    {
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-A",
+        "course": "BCA49112",
+        "faculty": "BWU/BCA/001",
+        "room": "R101"
+    },
+    {
+        "day": "Wednesday",
+        "start_time": "10:15",
+        "end_time": "11:15",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-B",
+        "course": "BCA49112",
+        "faculty": "BWU/BCA/002",
+        "room": "R102"
+    },
+    {
+        "day": "Wednesday",
+        "start_time": "11:30",
+        "end_time": "12:30",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-A",
+        "course": "BCA47111",
+        "faculty": "BWU/BCA/003",
+        "room": "R103"
+    },
+    {
+        "day": "Wednesday",
+        "start_time": "14:00",
+        "end_time": "15:00",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-B",
+        "course": "BCA47111",
+        "faculty": "BWU/BCA/004",
+        "room": "R104"
+    },
+    {
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-A",
+        "course": "BCA47113",
+        "faculty": "BWU/BCA/002",
+        "room": "R101"
+    },
+    {
+        "day": "Thursday",
+        "start_time": "10:15",
+        "end_time": "11:15",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-B",
+        "course": "BCA47113",
+        "faculty": "BWU/BCA/003",
+        "room": "R102"
+    },
+    {
+        "day": "Thursday",
+        "start_time": "11:30",
+        "end_time": "12:30",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-A",
+        "course": "BCA40202",
+        "faculty": "BWU/BCA/004",
+        "room": "R103"
+    },
+    {
+        "day": "Thursday",
+        "start_time": "14:00",
+        "end_time": "15:00",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-B",
+        "course": "BCA40202",
+        "faculty": "BWU/BCA/001",
+        "room": "R104"
+    },
+    {
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-A",
+        "course": "BCA49112",
+        "faculty": "BWU/BCA/001",
+        "room": "R101"
+    },
+    {
+        "day": "Friday",
+        "start_time": "10:15",
+        "end_time": "11:15",
+        "semester": "BCA(H)-2023-1",
+        "section": "BCA(H)-2023-B",
+        "course": "BCA49112",
+        "faculty": "BWU/BCA/002",
+        "room": "R102"
+    },
+    {
+        "day": "Friday",
+        "start_time": "11:30",
+        "end_time": "12:30",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-A",
+        "course": "BCA47111",
+        "faculty": "BWU/BCA/003",
+        "room": "R103"
+    },
+    {
+        "day": "Friday",
+        "start_time": "14:00",
+        "end_time": "15:00",
+        "semester": "BCA(H)-2024-1",
+        "section": "BCA(H)-2024-B",
+        "course": "BCA47111",
+        "faculty": "BWU/BCA/004",
+        "room": "R104"
+    }
+]
+
+
+def add_class_routine_into_schedules_list(routines):
+    schedules = []
+
+    for routine in routines:
+        schedules.append({
+            "method": "POST",
+            "url": f'{BASE_URL}/classes/add-class-routine/',
+            "data": {
+                "id": f"{routine['section']}-{routine['course']}-{routine['day']}"
+            } | routine,
+            "headers": {
+                'Authorization': f"Bearer {Token}"
+            }
+        })
+
+    return schedules
+
 
 def fetch(config):
     try:
@@ -1100,7 +1367,7 @@ def fetch(config):
         return None
 
 
-# print(fetch(get_access_token))
+print(fetch(get_access_token))
 # print(fetch(add_department))
 # print(fetch(add_batch_1))
 # print(fetch(add_batch_2))
@@ -1110,6 +1377,10 @@ def fetch(config):
 # print(fetch(add_section_4))
 # print(fetch(add_semester_1))
 # print(fetch(add_semester_2))
+# print(fetch(add_section_to_semester_1))
+# print(fetch(add_section_to_semester_2))
+# print(fetch(add_section_to_semester_3))
+# print(fetch(add_section_to_semester_4))
 # print(fetch(add_student_1))
 # print(fetch(add_student_2))
 # print(fetch(add_student_3))
@@ -1174,7 +1445,9 @@ def fetch(config):
 # print(fetch(batch_2_add_lecture_to_module_8))
 # print(fetch(batch_2_add_module_to_course_3))
 # print(fetch(batch_2_add_module_to_course_4))
-print(fetch(add_course_1_semester_1))
-print(fetch(add_course_2_semester_1))
-print(fetch(add_course_3_semester_1))
-print(fetch(add_course_4_semester_1))
+# print(fetch(add_course_1_semester_1))
+# print(fetch(add_course_2_semester_1))
+# print(fetch(add_course_3_semester_1))
+# print(fetch(add_course_4_semester_1))
+# for schedule in add_class_routine_into_schedules_list(class_routine_schedules):
+#     print(fetch(schedule))

@@ -33,6 +33,7 @@ class Section(models.Model):
 class Semester(models.Model):
     id = models.CharField(max_length=30, primary_key=True, unique=True)
     batch = models.ForeignKey("Batch", on_delete=models.CASCADE)
+    sections = models.ManyToManyField(Section, related_name="semesters")
     name = models.CharField(max_length=100)
 
     def __str__(self):

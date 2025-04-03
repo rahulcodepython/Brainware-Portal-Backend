@@ -1,7 +1,7 @@
 from rest_framework import views, permissions
 from backend.message import Message
 from backend.utils import catch_exception
-from .models import Semester_Course, Course
+from .models import Semester_Course, Course, Section, Semester
 from django.shortcuts import get_object_or_404
 from .serializers import (
     DepartmentSerializer,
@@ -91,3 +91,19 @@ class AddCourseToSemester(views.APIView):
 
         semester_course.courses.add(course)
         return Message.success('Course added to semester successfully')
+
+
+class AddSectionsToSemester(views.APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    @catch_exception
+    def post(self, request, *args, **kwargs):
+        semester = get_object_or_404(
+            Semester, id=request.data['semester'])
+        section = get_object_or_404(Section, id=request.data['section'])
+
+        if semester.batch != section.batch:
+            return Message.error('Batch mismatch between semester and section')
+
+        semester.sections.add(section)
+        return Message.success('Section added to semester successfully')
