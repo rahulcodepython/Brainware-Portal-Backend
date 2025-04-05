@@ -1,12 +1,8 @@
-from rest_framework import views, response, permissions, status
+from rest_framework import views, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from backend.message import Message
 from backend.utils import catch_exception
-from authentication.models import User, Student_Profile, Faculty_Profile
-from academics.models import Section, Semester
-from django.shortcuts import get_object_or_404
-from academics.models import Department
 from .serializers import (
     LoginSerializer,
     UserSerializer,

@@ -2,7 +2,6 @@ from rest_framework import views, permissions
 from backend.message import Message
 from backend.utils import catch_exception
 from .serializers import ClassRoutineSerializer, AddLecturePlanSerializer
-from academics.models import Semester
 
 
 class AddClassRoutine(views.APIView):
@@ -16,7 +15,7 @@ class AddClassRoutine(views.APIView):
             return Message.error(serialized.errors)
 
         serialized.save()
-        return Message.success("Class routine added successfully")
+        return Message.success("Class routine added successfully", {"id": serialized.data["id"]})
 
 
 class AddLecturePlan(views.APIView):
@@ -24,11 +23,6 @@ class AddLecturePlan(views.APIView):
 
     @catch_exception
     def post(self, request):
-
-        # print(request.data['section'])
-        # print(request.data['section'] not in Semester.objects.filter(
-        #     id=request.data['semester']).values_list('sections', flat=True))
-
         serialized = AddLecturePlanSerializer(data=request.data)
 
         if not serialized.is_valid():

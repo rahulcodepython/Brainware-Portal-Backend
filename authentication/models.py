@@ -37,8 +37,6 @@ class Profile(models.Model):
 class Student_Profile(Profile):
     section = models.ForeignKey(
         Section, on_delete=models.CASCADE, null=True, blank=True)
-    current_semester = models.ForeignKey(
-        Semester, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.user.code

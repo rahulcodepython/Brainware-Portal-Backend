@@ -23,7 +23,14 @@ class ModuleSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        return super().create(validated_data)
+        module = super().create(validated_data)
+
+        course = module.course
+        course.modules.add(module)
+
+        course.save()
+
+        return module
 
 
 class LectureSerializer(serializers.ModelSerializer):
@@ -32,4 +39,11 @@ class LectureSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return super().create(validated_data)
+        lecture = super().create(validated_data)
+
+        module = lecture.module
+        module.lectures.add(lecture)
+
+        module.save()
+
+        return lecture

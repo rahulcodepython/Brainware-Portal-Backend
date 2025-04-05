@@ -1,7 +1,7 @@
 from rest_framework import views, permissions
 from backend.message import Message
 from backend.utils import catch_exception
-from .models import Semester_Course, Course, Section, Semester
+from .models import Semester
 from django.shortcuts import get_object_or_404
 from .serializers import (
     DepartmentSerializer,
@@ -70,12 +70,8 @@ class AddSemester(views.APIView):
         if not serialized.is_valid():
             return Message.error(serialized.errors)
 
-        semester = serialized.save()
+        serialized.save()
 
-        Semester_Course.objects.create(
-            id=serialized.data['id'],
-            semester=semester,
-        )
         return Message.success('Semester added successfully')
 
 
@@ -85,25 +81,14 @@ class AddCourseToSemester(views.APIView):
 
     @catch_exception
     def post(self, request, *args, **kwargs):
-        semester_course = get_object_or_404(
-            Semester_Course, id=request.data['semester'])
-        course = get_object_or_404(Course, id=request.data['course'])
+        semester = get_object_or_404(Semester, id=request.data['semester'])
+        request.data.pop('semester')
 
-        semester_course.courses.add(course)
+        serialized = SemesterSerializer(
+            semester, data=request.data, partial=True)
+
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
         return Message.success('Course added to semester successfully')
-
-
-class AddSectionsToSemester(views.APIView):
-    permission_classes = [permissions.IsAdminUser]
-
-    @catch_exception
-    def post(self, request, *args, **kwargs):
-        semester = get_object_or_404(
-            Semester, id=request.data['semester'])
-        section = get_object_or_404(Section, id=request.data['section'])
-
-        if semester.batch != section.batch:
-            return Message.error('Batch mismatch between semester and section')
-
-        semester.sections.add(section)
-        return Message.success('Section added to semester successfully')

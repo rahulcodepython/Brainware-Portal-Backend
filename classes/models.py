@@ -2,6 +2,8 @@ from django.db import models
 from courses.models import Course, Lecture, Module
 from authentication.models import Faculty_Profile, Student_Profile
 from academics.models import Semester, Section
+
+
 # Create your models here.
 
 
@@ -12,6 +14,8 @@ class Lecture_Plan(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    referrence_class_routine = models.ForeignKey(
+        "Class_Routine", on_delete=models.SET_NULL, null=True, blank=True, default=None)
     assigned_date = models.DateField()
     assigned_faculties = models.ManyToManyField(
         Faculty_Profile, related_name="lecture_plan_faculties")
@@ -27,6 +31,12 @@ class Lecture_Plan(models.Model):
 
     def __str__(self):
         return self.id
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = f"L-Plan-{self.module}-{self.lecture}-{self.referrence_class_routine}"
+
+        super().save(*args, **kwargs)
 
 
 class Attendance(models.Model):
@@ -64,6 +74,15 @@ class Class_Routine(models.Model):
 
     def __str__(self):
         return self.id
+
+    def save(self, *args, **kwargs):
+        if self.start_time >= self.end_time:
+            raise ValueError("Start time must be before end time.")
+
+        if not self.id:
+            self.id = f"{self.section}-{self.course}-{self.day}-{self.start_time.strftime('%H%M')}-{self.end_time.strftime('%H%M')}"
+
+        super().save(*args, **kwargs)
 
 
 class Preparatory_Class(models.Model):

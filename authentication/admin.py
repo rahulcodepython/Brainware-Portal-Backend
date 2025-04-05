@@ -14,7 +14,7 @@ admin.site.unregister(DjangoGroup)
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('code', 'is_active', 'is_staff')
+    list_display = ('code', 'is_superuser', 'is_active', 'is_staff')
     search_fields = ('code',)
     ordering = ('code',)
     filter_horizontal = ()
@@ -25,9 +25,13 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Student_Profile)
 class StudentProfileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email')
+    list_display = ('code', 'name', 'email', 'section')
+    search_fields = ('code', 'name', 'section__name')
+    ordering = ('code',)
 
 
 @admin.register(Faculty_Profile)
 class FacultyProfileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email')
+    list_display = ('code', 'name', 'email', 'department')
+    search_fields = ('code', 'name', 'department__name')
+    ordering = ('code',)
