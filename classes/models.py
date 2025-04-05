@@ -38,6 +38,9 @@ class Lecture_Plan(models.Model):
 
         super().save(*args, **kwargs)
 
+    class Meta:
+        verbose_name_plural = "Lecture Plans"
+
 
 class Attendance(models.Model):
     id = models.CharField(max_length=50, primary_key=True, unique=True)
@@ -48,6 +51,9 @@ class Attendance(models.Model):
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name_plural = "Attendances"
 
 
 DAY_CHOICES = (
@@ -75,6 +81,9 @@ class Class_Routine(models.Model):
     def __str__(self):
         return self.id
 
+    class Meta:
+        verbose_name_plural = "Class Routines"
+
     def save(self, *args, **kwargs):
         if self.start_time >= self.end_time:
             raise ValueError("Start time must be before end time.")
@@ -96,3 +105,6 @@ class Preparatory_Class(models.Model):
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name_plural = "Preparatory Classes"

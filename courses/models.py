@@ -11,6 +11,9 @@ class Course(models.Model):
     def __str__(self):
         return self.id
 
+    class Meta:
+        verbose_name_plural = "Courses"
+
 
 class Module(models.Model):
     id = models.CharField(max_length=30, primary_key=True, unique=True)
@@ -22,6 +25,9 @@ class Module(models.Model):
     def __str__(self):
         return self.id
 
+    class Meta:
+        verbose_name_plural = "Modules"
+
 
 class Lecture(models.Model):
     id = models.CharField(max_length=30, primary_key=True, unique=True)
@@ -31,3 +37,6 @@ class Lecture(models.Model):
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name_plural = "Lectures"

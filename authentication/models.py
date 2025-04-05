@@ -41,6 +41,10 @@ class Student_Profile(Profile):
     def __str__(self):
         return self.user.code
 
+    class Meta:
+        verbose_name_plural = "Student Profile"
+        verbose_name_plural = "Student Profiles"
+
 
 class Faculty_Profile(Profile):
     department = models.ForeignKey(
@@ -48,3 +52,7 @@ class Faculty_Profile(Profile):
 
     def __str__(self):
         return self.user.code
+
+    class Meta:
+        verbose_name_plural = "Faculty Profile"
+        verbose_name_plural = "Faculty Profiles"

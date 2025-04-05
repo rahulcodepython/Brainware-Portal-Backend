@@ -13,6 +13,9 @@ class Department(models.Model):
     def __str__(self):
         return f"{self.name}-{self.id}"
 
+    class Meta:
+        verbose_name_plural = "Departments"
+
 
 class Batch(models.Model):
     id = models.CharField(max_length=30, primary_key=True, unique=True)
@@ -28,6 +31,9 @@ class Batch(models.Model):
     def __str__(self):
         return self.id
 
+    class Meta:
+        verbose_name_plural = "Batches"
+
 
 class Section(models.Model):
     id = models.CharField(max_length=30, primary_key=True, unique=True)
@@ -36,6 +42,9 @@ class Section(models.Model):
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name_plural = "Sections"
 
 
 class Semester(models.Model):
@@ -47,3 +56,6 @@ class Semester(models.Model):
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name_plural = "Semesters"
