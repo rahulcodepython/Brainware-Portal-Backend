@@ -1,37 +1,53 @@
+# Importing admin module for Django admin interface
 from django.contrib import admin
-from .models import (
-    Department, Batch, Section, Semester, Semester_Course_Faculty,
+from .models import (  # Importing required models from the current app
+    Department,
+    Batch,
+    Section,
+    Semester,
+    Semester_Course_Faculty,
 )
 
-# Register your models here.
+# Registering models with the Django admin interface
 
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    search_fields = ('id', 'name')
+    # Displaying fields in the admin list view
+    list_display: tuple[str, str] = ('id', 'name')
+    # Enabling search functionality for specified fields
+    search_fields: tuple[str, str] = ('id', 'name')
 
 
 @admin.register(Batch)
 class BatchAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'department')
-    search_fields = ('id', 'name')
+    # Displaying fields in the admin list view
+    list_display: tuple[str, str, str] = ('id', 'name', 'department')
+    # Enabling search functionality for specified fields
+    search_fields: tuple[str, str] = ('id', 'name')
 
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'batch')
-    search_fields = ('id', 'name')
+    # Displaying fields in the admin list view
+    list_display: tuple[str, str, str] = ('id', 'name', 'batch')
+    # Enabling search functionality for specified fields
+    search_fields: tuple[str, str] = ('id', 'name')
 
 
 @admin.register(Semester)
 class SemesterAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'batch')
-    search_fields = ('id', 'name')
+    # Displaying fields in the admin list view
+    list_display: tuple[str, str, str] = ('id', 'name', 'batch')
+    # Enabling search functionality for specified fields
+    search_fields: tuple[str, str] = ('id', 'name')
 
 
 @admin.register(Semester_Course_Faculty)
 class SemesterCourseFacultyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'semester', 'course')
-    search_fields = ('id', 'semester__id', 'course__id')
-    list_filter = ('semester', 'course')
+    # Displaying fields in the admin list view
+    list_display: tuple[str, str, str] = ('id', 'semester', 'course')
+    # Enabling search functionality for specified fields
+    search_fields: tuple[str, str, str] = ('id', 'semester__id', 'course__id')
+    # Adding filters for specified fields in the admin list view
+    list_filter: tuple[str, str] = ('semester', 'course')
