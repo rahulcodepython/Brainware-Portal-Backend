@@ -1,13 +1,12 @@
-from rest_framework.views import APIView  # Import only what's needed
-from rest_framework.response import Response  # Import Response directly
-# Import specific permission class
+from rest_framework.generics import GenericAPIView  # Use GenericAPIView
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework.status import HTTP_200_OK  # Import specific status code
+from rest_framework.status import HTTP_200_OK
 
 # Define the Index view for the API
 
 
-class Index(APIView):
+class Index(GenericAPIView):
     """
     Index view for the API.
     """

@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from rest_framework import views, permissions
+from rest_framework import generics, permissions
 from rest_framework.request import Request
 from rest_framework.response import Response
 from backend.message import Message
@@ -16,286 +16,231 @@ from .serializers import (
 from courses.models import Course
 
 
-# Creating new Department API
-class AddDepartment(views.APIView):
+# Department Views
+class AddDepartment(generics.CreateAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
     permission_classes = [permissions.IsAdminUser]
 
     @catch_exception
     def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Serialize the incoming data
-        serialized: DepartmentSerializer = DepartmentSerializer(
-            data=request.data)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the department
-        serialized.save()
-
-        return Message.success("Department added successfully")
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 201:
+            return Message.success("Department added successfully")
+        return response
 
 
-class Departments(views.APIView):
+class Departments(generics.ListAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Fetch all departments and serialize them
-        departments = Department.objects.all()
-        serialized = DepartmentSerializer(departments, many=True)
-        return Message.success("Departments fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Departments fetched successfully", response.data)
 
 
-class Department(views.APIView):
+class Department(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch a specific department by ID
-        department = get_object_or_404(Department, id=kwargs["id"])
-        serialized = DepartmentSerializer(department)
-        return Message.success("Department fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Department fetched successfully", response.data)
 
     @catch_exception
     def patch(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and update a specific department
-        department = get_object_or_404(Department, id=kwargs["id"])
-        serialized = DepartmentSerializer(
-            department, data=request.data, partial=True)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the updated department
-        serialized.save()
-        return Message.success("Department updated successfully")
+        response = super().patch(request, *args, **kwargs)
+        if response.status_code == 200:
+            return Message.success("Department updated successfully")
+        return response
 
     @catch_exception
     def delete(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and delete a specific department
-        department = get_object_or_404(Department, id=kwargs["id"])
-        department.delete()
-        return Message.success("Department deleted successfully")
+        response = super().delete(request, *args, **kwargs)
+        if response.status_code == 204:
+            return Message.success("Department deleted successfully")
+        return response
 
 
-# Creating new Batch API
-class AddBatch(views.APIView):
+# Batch Views
+class AddBatch(generics.CreateAPIView):
+    queryset = Batch.objects.all()
+    serializer_class = BatchSerializer
     permission_classes = [permissions.IsAdminUser]
 
     @catch_exception
     def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Serialize the incoming data
-        serialized: BatchSerializer = BatchSerializer(data=request.data)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the batch
-        serialized.save()
-
-        return Message.success("Batch added successfully")
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 201:
+            return Message.success("Batch added successfully")
+        return response
 
 
-class Batches(views.APIView):
+class Batches(generics.ListAPIView):
+    queryset = Batch.objects.all()
+    serializer_class = BatchSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Fetch all batches and serialize them
-        batches = Batch.objects.all()
-        serialized = BatchSerializer(batches, many=True)
-        return Message.success("Batches fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Batches fetched successfully", response.data)
 
 
-class Batch(views.APIView):
+class Batch(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Batch.objects.all()
+    serializer_class = BatchSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch a specific batch by ID
-        batch = get_object_or_404(Batch, id=kwargs["id"])
-        serialized = BatchSerializer(batch)
-        return Message.success("Batch fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Batch fetched successfully", response.data)
 
     @catch_exception
     def patch(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and update a specific batch
-        batch = get_object_or_404(Batch, id=kwargs["id"])
-        serialized = BatchSerializer(batch, data=request.data, partial=True)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the updated batch
-        serialized.save()
-        return Message.success("Batch updated successfully")
+        response = super().patch(request, *args, **kwargs)
+        if response.status_code == 200:
+            return Message.success("Batch updated successfully")
+        return response
 
     @catch_exception
     def delete(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and delete a specific batch
-        batch = get_object_or_404(Batch, id=kwargs["id"])
-        batch.delete()
-        return Message.success("Batch deleted successfully")
+        response = super().delete(request, *args, **kwargs)
+        if response.status_code == 204:
+            return Message.success("Batch deleted successfully")
+        return response
 
 
-# Creating new Section API
-class AddSection(views.APIView):
+# Section Views
+class AddSection(generics.CreateAPIView):
+    queryset = Section.objects.all()
+    serializer_class = SectionSerializer
     permission_classes = [permissions.IsAdminUser]
 
     @catch_exception
     def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Serialize the incoming data
-        serialized: SectionSerializer = SectionSerializer(data=request.data)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the section
-        serialized.save()
-
-        return Message.success("Section added successfully")
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 201:
+            return Message.success("Section added successfully")
+        return response
 
 
-class Sections(views.APIView):
+class Sections(generics.ListAPIView):
+    queryset = Section.objects.all()
+    serializer_class = SectionSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Fetch all sections and serialize them
-        sections = Section.objects.all()
-        serialized = SectionSerializer(sections, many=True)
-        return Message.success("Sections fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Sections fetched successfully", response.data)
 
 
-class Section(views.APIView):
+class Section(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Section.objects.all()
+    serializer_class = SectionSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch a specific section by ID
-        section = get_object_or_404(Section, id=kwargs["id"])
-        serialized = SectionSerializer(section)
-        return Message.success("Section fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Section fetched successfully", response.data)
 
     @catch_exception
     def patch(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and update a specific section
-        section = get_object_or_404(Section, id=kwargs["id"])
-        serialized = SectionSerializer(
-            section, data=request.data, partial=True)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the updated section
-        serialized.save()
-        return Message.success("Section updated successfully")
+        response = super().patch(request, *args, **kwargs)
+        if response.status_code == 200:
+            return Message.success("Section updated successfully")
+        return response
 
     @catch_exception
     def delete(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and delete a specific section
-        section = get_object_or_404(Section, id=kwargs["id"])
-        section.delete()
-        return Message.success("Section deleted successfully")
-# Creating new Semester API
+        response = super().delete(request, *args, **kwargs)
+        if response.status_code == 204:
+            return Message.success("Section deleted successfully")
+        return response
 
 
-class AddSemester(views.APIView):
+# Semester Views
+class AddSemester(generics.CreateAPIView):
+    queryset = Semester.objects.all()
+    serializer_class = SemesterSerializer
     permission_classes = [permissions.IsAdminUser]
 
     @catch_exception
     def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Serialize the incoming data
-        serialized: SemesterSerializer = SemesterSerializer(data=request.data)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the semester
-        serialized.save()
-
-        return Message.success("Semester added successfully")
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 201:
+            return Message.success("Semester added successfully")
+        return response
 
 
-class Semesters(views.APIView):
+class Semesters(generics.ListAPIView):
+    queryset = Semester.objects.all()
+    serializer_class = SemesterSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        # Fetch all semesters and serialize them
-        semesters = Semester.objects.all()
-        serialized = SemesterSerializer(semesters, many=True)
-        return Message.success("Semesters fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Semesters fetched successfully", response.data)
 
 
-class Semester(views.APIView):
+class Semester(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Semester.objects.all()
+    serializer_class = SemesterSerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch a specific semester by ID
-        semester = get_object_or_404(Semester, id=kwargs["id"])
-        serialized = SemesterSerializer(semester)
-        return Message.success("Semester fetched successfully", serialized.data)
+        response = super().get(request, *args, **kwargs)
+        return Message.success("Semester fetched successfully", response.data)
 
     @catch_exception
     def patch(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and update a specific semester
-        semester = get_object_or_404(Semester, id=kwargs["id"])
-        serialized = SemesterSerializer(
-            semester, data=request.data, partial=True)
-
-        # Validate the serialized data
-        if not serialized.is_valid():
-            return Message.error(serialized.errors)
-
-        # Save the updated semester
-        serialized.save()
-        return Message.success("Semester updated successfully")
+        response = super().patch(request, *args, **kwargs)
+        if response.status_code == 200:
+            return Message.success("Semester updated successfully")
+        return response
 
     @catch_exception
     def delete(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch and delete a specific semester
-        semester = get_object_or_404(Semester, id=kwargs["id"])
-        semester.delete()
-        return Message.success("Semester deleted successfully")
+        response = super().delete(request, *args, **kwargs)
+        if response.status_code == 204:
+            return Message.success("Semester deleted successfully")
+        return response
 
 
-class SemesterCourseFaculty(views.APIView):
+# SemesterCourseFaculty Views
+class SemesterCourseFaculty(generics.GenericAPIView):
+    serializer_class = Semester_Course_FacultySerializer
+
     @catch_exception
     def get(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch semester and course
         semester = get_object_or_404(Semester, id=kwargs["semester"])
         course = get_object_or_404(Course, id=kwargs["course"])
-
-        # Fetch and serialize semester-course-faculty data
         semester_course_faculty = Semester_Course_Faculty.objects.filter(
             semester=semester, course=course
         )
-        serialized = Semester_Course_FacultySerializer(
-            semester_course_faculty, many=True)
+        serialized = self.get_serializer(semester_course_faculty, many=True)
         return Message.success("Semester Course Faculty fetched successfully", serialized.data)
 
     @catch_exception
     def patch(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch semester and course
         semester = get_object_or_404(Semester, id=kwargs["semester"])
         course = get_object_or_404(Course, id=kwargs["course"])
-
-        # Fetch and update semester-course-faculty data
         semester_course_faculty = Semester_Course_Faculty.objects.filter(
             semester=semester, course=course
         )
-        serialized = Semester_Course_FacultySerializer(
-            semester_course_faculty, data=request.data, partial=True
+        serialized = self.get_serializer(
+            semester_course_faculty, data=request.data, partial=True, many=True
         )
-
-        # Validate the serialized data
         if not serialized.is_valid():
             return Message.error(serialized.errors)
-
-        # Save the updated data
         serialized.save()
         return Message.success("Semester Course Faculty updated successfully")
 
     @catch_exception
     def delete(self, request: Request, *args: Any, **kwargs: Dict[str, int]) -> Response:
-        # Fetch semester and course
         semester = get_object_or_404(Semester, id=kwargs["semester"])
         course = get_object_or_404(Course, id=kwargs["course"])
-
-        # Fetch and delete semester-course-faculty data
         semester_course_faculty = get_object_or_404(
             Semester_Course_Faculty, semester=semester, course=course
         )
