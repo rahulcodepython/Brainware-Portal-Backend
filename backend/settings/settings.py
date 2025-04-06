@@ -1,36 +1,38 @@
+# Utility to generate random secret keys
 from django.core.management.utils import get_random_secret_key
-from dotenv import load_dotenv
-from datetime import timedelta
-from pathlib import Path
-import os
+from dotenv import load_dotenv  # For loading environment variables from .env file
+from datetime import timedelta  # For token expiration settings
+from pathlib import Path  # For handling file paths
+import os  # For accessing environment variables
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# Base directory of the project
+BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
+# Secret key for the application, generated if not provided in the environment
+SECRET_KEY: str = os.getenv('SECRET_KEY', get_random_secret_key())
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('ENVIRONMENT', 'development') == 'development'
+# Debug mode, enabled only in development environment
+ENVIRONMENT: str = os.getenv('ENVIRONMENT', 'development')
+DEBUG: bool = ENVIRONMENT == 'development'
 
-# Application definition
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+# Installed applications for the Django project
+INSTALLED_APPS: list[str] = [
+    'django.contrib.admin',  # Admin site
+    'django.contrib.auth',  # Authentication framework
+    'django.contrib.contenttypes',  # Content types framework
+    'django.contrib.sessions',  # Session framework
+    'django.contrib.messages',  # Messaging framework
+    'django.contrib.staticfiles',  # Static files handling
 
     # Third-party apps
-    'rest_framework',
-    'corsheaders',
-    'rest_framework_simplejwt',
+    'rest_framework',  # Django REST framework
+    'corsheaders',  # Cross-Origin Resource Sharing
+    'rest_framework_simplejwt',  # JWT authentication
 
-    # Django apps
+    # Custom Django apps
     'academics',
     'authentication',
     'classes',
@@ -39,26 +41,30 @@ INSTALLED_APPS = [
     'notices',
 ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+# Middleware for handling requests and responses
+MIDDLEWARE: list[str] = [
+    'django.middleware.security.SecurityMiddleware',  # Security enhancements
+    'django.contrib.sessions.middleware.SessionMiddleware',  # Session handling
+    'corsheaders.middleware.CorsMiddleware',  # CORS handling
+    'django.middleware.common.CommonMiddleware',  # Common middleware
+    'django.middleware.csrf.CsrfViewMiddleware',  # CSRF protection
+    # Authentication middleware
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',  # Messaging middleware
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Clickjacking protection
 ]
 
-ROOT_URLCONF = 'backend.urls'
+# Root URL configuration
+ROOT_URLCONF: str = 'backend.urls'
 
-TEMPLATES = [
+# Template settings
+TEMPLATES: list[dict] = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Template engine
+        'DIRS': [],  # Directories for custom templates
+        'APP_DIRS': True,  # Enable app directories for templates
         'OPTIONS': {
-            'context_processors': [
+            'context_processors': [  # Context processors for templates
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -68,60 +74,56 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+# WSGI application entry point
+WSGI_APPLICATION: str = 'backend.wsgi.application'
 
 # Custom user model
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL: str = 'authentication.User'
 
-# Database
-DATABASES = {
+# Database configuration
+DATABASES: dict = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # SQLite database engine
+        'NAME': BASE_DIR / 'db.sqlite3',  # Database file path
     }
 }
 
-# Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+# Password validation settings
+AUTH_PASSWORD_VALIDATORS: list[dict] = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
+# Internationalization settings
+LANGUAGE_CODE: str = 'en-us'  # Default language
+TIME_ZONE: str = 'UTC'  # Default timezone
+USE_I18N: bool = True  # Enable internationalization
+USE_TZ: bool = True  # Enable timezone support
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+# Static files settings
+STATIC_URL: str = 'static/'  # URL for serving static files
 
 # Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD: str = 'django.db.models.BigAutoField'
 
-# Rest Framework settings
-REST_FRAMEWORK = {
+# Django REST framework settings
+REST_FRAMEWORK: dict = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',  # Default permission class
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT authentication
     )
 }
 
 # Simple JWT settings
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=14),
-    'AUTH_HEADER_TYPES': ('Bearer',)
+ACCESS_TOKEN_LIFETIME: timedelta = timedelta(days=7)  # Access token lifetime
+REFRESH_TOKEN_LIFETIME: timedelta = timedelta(
+    days=14)  # Refresh token lifetime
+SIMPLE_JWT: dict = {
+    'ACCESS_TOKEN_LIFETIME': ACCESS_TOKEN_LIFETIME,
+    'SLIDING_TOKEN_REFRESH_LIFETIME': REFRESH_TOKEN_LIFETIME,
+    'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization header type
 }
