@@ -13,6 +13,9 @@ class CourseSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return super().create(validated_data)
 
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
 
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,6 +35,9 @@ class ModuleSerializer(serializers.ModelSerializer):
 
         return module
 
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
 
 class LectureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,3 +53,6 @@ class LectureSerializer(serializers.ModelSerializer):
         module.save()
 
         return lecture
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)

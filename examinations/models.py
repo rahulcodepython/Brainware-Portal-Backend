@@ -23,3 +23,7 @@ class Marks(models.Model):
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name = 'Marks'
+        verbose_name_plural = 'Marks'

@@ -1,5 +1,4 @@
 from django.db import models
-from courses.models import Course
 
 # Create your models here.
 
@@ -52,10 +51,30 @@ class Semester(models.Model):
     name = models.CharField(max_length=100)
     batch = models.ForeignKey("Batch", on_delete=models.CASCADE)
     courses = models.ManyToManyField(
-        Course, related_name="semester_courses", blank=True)
+        "courses.Course", related_name="semester_courses", blank=True)
 
     def __str__(self):
         return self.id
 
     class Meta:
         verbose_name_plural = "Semesters"
+
+
+class Semester_Course_Faculty(models.Model):
+    id = models.CharField(max_length=30, primary_key=True, unique=True)
+    semester = models.ForeignKey("Semester", on_delete=models.CASCADE)
+    course = models.ForeignKey("courses.Course", on_delete=models.CASCADE)
+    faculty = models.ManyToManyField(
+        "authentication.Faculty_Profile", blank=True, related_name="faculty_semester_courses")
+
+    def __str__(self):
+        return f"{self.semester.name}-{self.course.name}"
+
+    def save(self, *args, **kwargs):
+        if self.id is None:
+            self.id = f"{self.semester.id}-{self.course.id}"
+
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "Semester Course Faculty"

@@ -9,6 +9,8 @@ from .serializers import (
     Student_ProfileSerializer,
     Faculty_ProfileSerializer,
 )
+from .models import Student_Profile, Faculty_Profile, User
+from django.shortcuts import get_object_or_404
 
 
 class Login(views.APIView):
@@ -55,6 +57,54 @@ class AddStudent(views.APIView):
         return Message.success('Student added successfully')
 
 
+class StudentList(views.APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    @catch_exception
+    def get(self, request, *args, **kwargs):
+        students = Student_ProfileSerializer(
+            Student_Profile.objects.all(), many=True).data
+        return Message.success('Students retrieved successfully', students)
+
+
+class StudentDetail(views.APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    @catch_exception
+    def get(self, request, code, *args, **kwargs):
+        student = get_object_or_404(Student_Profile, code=code)
+        serialized = Student_ProfileSerializer(student).data
+        return Message.success('Student retrieved successfully', serialized)
+
+    @catch_exception
+    def patch(self, request, code, *args, **kwargs):
+        user = get_object_or_404(User, code=code)
+        serialized = UserSerializer(
+            user, data=request.data, partial=True)
+
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
+        student = get_object_or_404(Student_Profile, code=code)
+        serialized = Student_ProfileSerializer(
+            student, data=request.data, partial=True)
+
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
+        return Message.success('Student updated successfully')
+
+    @catch_exception
+    def delete(self, request, code, *args, **kwargs):
+        user = get_object_or_404(User, code=code)
+        user.delete()
+        return Message.success('Student deleted successfully')
+
+
 class AddFaculty(views.APIView):
     permission_classes = [permissions.IsAdminUser]
 
@@ -75,3 +125,51 @@ class AddFaculty(views.APIView):
         faculty_serialized.save(user=user)
 
         return Message.success('Faculty added successfully')
+
+
+class FacultyList(views.APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    @catch_exception
+    def get(self, request, *args, **kwargs):
+        faculties = Faculty_ProfileSerializer(
+            Faculty_Profile.objects.all(), many=True).data
+        return Message.success('Faculties retrieved successfully', faculties)
+
+
+class FacultyDetail(views.APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    @catch_exception
+    def get(self, request, code, *args, **kwargs):
+        faculty = get_object_or_404(Faculty_Profile, code=code)
+        serialized = Faculty_ProfileSerializer(faculty).data
+        return Message.success('Faculty retrieved successfully', serialized)
+
+    @catch_exception
+    def patch(self, request, code, *args, **kwargs):
+        user = get_object_or_404(User, code=code)
+        serialized = UserSerializer(
+            user, data=request.data, partial=True)
+
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
+        faculty = get_object_or_404(Faculty_Profile, code=code)
+        serialized = Faculty_ProfileSerializer(
+            faculty, data=request.data, partial=True)
+
+        if not serialized.is_valid():
+            return Message.error(serialized.errors)
+
+        serialized.save()
+
+        return Message.success('Faculty updated successfully')
+
+    @catch_exception
+    def delete(self, request, code, *args, **kwargs):
+        user = get_object_or_404(User, code=code)
+        user.delete()
+        return Message.success('Faculty deleted successfully')

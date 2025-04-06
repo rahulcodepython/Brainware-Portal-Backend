@@ -1,5 +1,5 @@
-from rest_framework import serializers
 from authentication.models import User, Student_Profile, Faculty_Profile
+from rest_framework import serializers
 
 
 class LoginSerializer(serializers.Serializer):
@@ -20,13 +20,28 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'code', 'is_active',
+        fields = ['code', 'is_active',
                   'is_staff', 'password', 'is_superuser']
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'is_active': {'read_only': True},
+            'is_staff': {'read_only': True},
+            'is_superuser': {'read_only': True},
+        }
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
         user = super().create(validated_data)
+
+        if password:
+            user.set_password(password)
+            user.save()
+
+        return user
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        user = super().update(instance, validated_data)
 
         if password:
             user.set_password(password)
@@ -46,6 +61,9 @@ class Student_ProfileSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return super().create(validated_data)
 
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
 
 class Faculty_ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,3 +75,6 @@ class Faculty_ProfileSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)

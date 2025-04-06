@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import (
-    Department, Batch, Section, Semester
+    Department, Batch, Section, Semester, Semester_Course_Faculty,
 )
+
 # Register your models here.
 
 
@@ -27,3 +28,10 @@ class SectionAdmin(admin.ModelAdmin):
 class SemesterAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'batch')
     search_fields = ('id', 'name')
+
+
+@admin.register(Semester_Course_Faculty)
+class SemesterCourseFacultyAdmin(admin.ModelAdmin):
+    list_display = ('id', 'semester', 'course')
+    search_fields = ('id', 'semester__id', 'course__id')
+    list_filter = ('semester', 'course')
