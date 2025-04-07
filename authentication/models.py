@@ -1,8 +1,12 @@
 # For custom user model
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from typing import TypeVar, Type
 from django.db import models  # For database models
 from .manager import UserCustomManager  # Custom manager for User model
 
+# Type variable for the UserCustomManager
+UserCustomManagerType = TypeVar(
+    'UserCustomManagerType', bound=UserCustomManager)
 
 # Custom User model inheriting from AbstractBaseUser and PermissionsMixin
 class User(AbstractBaseUser, PermissionsMixin):
@@ -14,7 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff: bool = models.BooleanField(default=False)
 
     # Custom manager for User model
-    objects = UserCustomManager()
+    objects: UserCustomManagerType = UserCustomManager()
 
     # Field used for authentication
     USERNAME_FIELD: str = 'code'
@@ -45,7 +49,7 @@ class Profile(models.Model):
         return self.user.code  # String representation of the profile
 
     class Meta:
-        abstract = True  # Marking this model as abstract
+        abstract: bool = True  # Marking this model as abstract
 
 
 # Student Profile model inheriting from Profile

@@ -1,47 +1,47 @@
-from django.contrib import admin  # Importing admin module to register models
-from .models import (  # Importing required models from the current app
+"""
+Django admin configuration for registering models with the admin interface.
+This module defines how models are displayed and managed in the Django admin panel.
+"""
+from django.contrib import admin  # Import Django admin module
+from .models import (  # Import models from the current app
     LecturePlan,
     Attendance,
     Class_Routine,
     Preparatory_Class
 )
 
-# Registering LecturePlan model with custom admin configurations
-
 
 @admin.register(LecturePlan)
 class LecturePlanAdmin(admin.ModelAdmin):
-    # Fields to display in the admin list view
-    list_display: tuple[str, str, str] = ('id', 'lecture', 'assigned_date')
-    # Fields to enable search functionality
-    search_fields: tuple[str] = ('id',)
-
-# Registering Attendance model with custom admin configurations
+    """Admin configuration for the LecturePlan model."""
+    # Define columns to display in the admin list view
+    list_display: tuple[str, ...] = ('id', 'lecture', 'assigned_date')
+    # Define fields to enable search functionality
+    search_fields: tuple[str, ...] = ('id',)
 
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    # Fields to display in the admin list view
-    list_display: tuple[str, str, str] = ('id', 'student', 'attendance_status')
-    # Fields to enable search functionality
-    search_fields: tuple[str] = ('id',)
-
-# Registering Class_Routine model with custom admin configurations
+    """Admin configuration for the Attendance model."""
+    # Define columns to display in the admin list view
+    list_display: tuple[str, ...] = ('id', 'student', 'attendance_status')
+    # Define fields to enable search functionality
+    search_fields: tuple[str, ...] = ('id',)
 
 
 @admin.register(Class_Routine)
 class ClassRoutineAdmin(admin.ModelAdmin):
-    # Fields to display in the admin list view
-    list_display: tuple[str, str, str] = ('id', 'course', 'faculty')
-    # Fields to enable search functionality
-    search_fields: tuple[str] = ('id',)
-
-# Registering Preparatory_Class model with custom admin configurations
+    """Admin configuration for the Class_Routine model."""
+    # Define columns to display in the admin list view
+    list_display: tuple[str, ...] = ('id', 'course', 'faculty')
+    # Define fields to enable search functionality
+    search_fields: tuple[str, ...] = ('id',)
 
 
 @admin.register(Preparatory_Class)
 class PreparatoryClassAdmin(admin.ModelAdmin):
-    # Fields to display in the admin list view
-    list_display: tuple[str, str, str] = ('id', 'class_routine', 'approved')
-    # Fields to enable search functionality
-    search_fields: tuple[str] = ('id',)
+    """Admin configuration for the Preparatory_Class model."""
+    # Define columns to display in the admin list view
+    list_display: tuple[str, ...] = ('id', 'class_routine', 'approved')
+    # Define fields to enable search functionality
+    search_fields: tuple[str, ...] = ('id',)

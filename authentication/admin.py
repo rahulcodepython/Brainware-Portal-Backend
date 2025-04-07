@@ -5,8 +5,12 @@ from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib import admin  # Importing admin module for model registration
 
 # Setting up the admin panel's header and title
+# Admin site customization
 admin.site.site_header = 'Brainware University'  # Custom header for admin panel
 admin.site.site_title = 'Brainware University'  # Custom title for admin panel
+admin.site.index_title = 'Administration Portal'  # Custom index title
+admin.site.site_url = '/dashboard/'  # Custom site URL link in admin
+admin.site.empty_value_display = '-Empty-'  # Display for empty values
 
 # Unregistering the default Django Group model from admin
 admin.site.unregister(DjangoGroup)
