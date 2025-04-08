@@ -9,14 +9,20 @@ import os  # For accessing environment variables
 load_dotenv()
 
 # Base directory of the project
-BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 # Secret key for the application, generated if not provided in the environment
 SECRET_KEY: str = os.getenv('SECRET_KEY', get_random_secret_key())
 
 # Debug mode, enabled only in development environment
-ENVIRONMENT: str = os.getenv('ENVIRONMENT', 'development')
-DEBUG: bool = ENVIRONMENT == 'development'
+ENVIRONMENT: str = os.getenv('ENVIRONMENT')
+DEVELOPMENT: bool = ENVIRONMENT == 'development'
+DEBUG: bool = DEVELOPMENT  # Enable debug mode in development
+
+# Define allowed hosts for the application
+# Restrict access to these hosts
+ALLOWED_HOSTS: list[str] = [
+    "*"] if DEVELOPMENT else os.getenv('ALLOWED_HOSTS', '').split(',')
 
 # Installed applications for the Django project
 INSTALLED_APPS: list[str] = [
@@ -43,6 +49,8 @@ INSTALLED_APPS: list[str] = [
 
 # Middleware for handling requests and responses
 MIDDLEWARE: list[str] = [
+    # WhiteNoise for serving static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',  # Security enhancements
     'django.contrib.sessions.middleware.SessionMiddleware',  # Session handling
     'corsheaders.middleware.CorsMiddleware',  # CORS handling
@@ -103,7 +111,11 @@ USE_I18N: bool = True  # Enable internationalization
 USE_TZ: bool = True  # Enable timezone support
 
 # Static files settings
-STATIC_URL: str = 'static/'  # URL for serving static files
+STATIC_URL: str = '/static/'  # URL for serving static files
+# Directory for collecting static files
+STATIC_ROOT: Path = os.path.join(BASE_DIR, "staticfiles")
+# Storage backend for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD: str = 'django.db.models.BigAutoField'
@@ -127,3 +139,12 @@ SIMPLE_JWT: dict = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': REFRESH_TOKEN_LIFETIME,
     'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization header type
 }
+
+# CORS Configuration
+# Allow all origins for Cross-Origin Resource Sharing (CORS)
+# Explicitly define allowed origins (currently empty)
+CORS_ALLOWED_ORIGINS: list[str] = [] if DEVELOPMENT else os.getenv(
+    'CORS_ALLOWED_ORIGINS', '').split(',')
+
+# Enable CORS for all origins (use cautiously in production)
+CORS_ALLOW_ALL_ORIGINS: bool = DEVELOPMENT  # Allow all origins in development

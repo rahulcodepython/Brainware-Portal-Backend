@@ -141,9 +141,9 @@ class Semester_Course_Faculty(models.Model):
         super().save(*args, **kwargs)  # Call the parent save method
 
         def clean(self):
-            # Ensure the ID field is not required in the admin panel
-        if not self.id:
-            self.id = f"{self.semester.id}-{self.course.id}"
+            if not self.id:
+                # Ensure the ID field is not required in the admin panel
+                self.id = f"{self.semester.id}-{self.course.id}"
 
     class Meta:
         # Plural name for the admin interface

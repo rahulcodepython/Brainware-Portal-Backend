@@ -2,23 +2,23 @@ from django.contrib import admin  # Import admin module for admin site
 from django.urls import path, include  # Import path and include for URL routing
 from django.conf import settings  # Import settings to access DEBUG flag
 from typing import List, Callable  # Import type hints
-from .views import Index  # Import Index view for the root URL
+from .views import Index  # Import Index view for the root URLs
 
 
 def url_path(url: str) -> str:
     """
-    Generate URL path prefix based on DEBUG mode.
+    Generate URL path prefix based on DEVELOPMENT mode.
 
     Args:
         url: The URL suffix to append to the prefix
 
     Returns:
-        Full URL path with appropriate prefix based on DEBUG mode
+        Full URL path with appropriate prefix based on DEVELOPMENT mode
     """
-    # Check if DEBUG setting exists before using it
-    debug_enabled: bool = getattr(settings, 'DEBUG', False)
+    # Check if DEVELOPMENT setting exists before using it
+    development_enabled: bool = getattr(settings, 'DEVELOPMENT', False)
     # Return URL with prefix only in production
-    prefix: str = '' if debug_enabled else 'api/'
+    prefix: str = '' if development_enabled else 'api/'
     return f"{prefix}{url}"
 
 

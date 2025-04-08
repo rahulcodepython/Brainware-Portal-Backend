@@ -1,0 +1,43 @@
+services:
+  server:
+    build:
+      context: .
+    env_file:
+      - .env
+    # Optional: override or add more variables
+    environment:
+      - ENVIRONMENT=production
+    # ports:
+    #   - "8000:8000"
+    volumes:
+      - static_volume:/app/staticfiles
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.django.rule=Host(`localhost`)"
+      - "traefik.http.routers.django.entrypoints=web"
+      - "traefik.http.services.django.loadbalancer.server.port=8000"
+    networks:
+      - web
+
+  traefik:
+    image: traefik:v3.0
+    command:
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --providers.docker=true
+      - --entrypoints.web.address=:80
+      - --providers.docker.exposedbydefault=false
+    ports:
+      - "80:80"
+      - "8080:8080" # for dashboard (optional)
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
+
+volumes:
+  static_volume:
