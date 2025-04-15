@@ -1,0 +1,12 @@
+{% extends "base_login.html" %}
+
+{% block title %}
+Index Page
+{% endblock %}
+
+{% block body %}
+    <h1>Welcome to the Home Page</h1>
+    {% for user in users %}
+        <p>{{ user.code }}</p>
+    {% endfor %}
+{% endblock %}

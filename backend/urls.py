@@ -24,7 +24,7 @@ def url_path(url: str) -> str:
 
 # Define URL pattern components for better readability
 admin_path: str = url_path('admin/')  # Admin URL path
-root_path: str = url_path('')  # Root URL path
+# root_path: str = url_path('')  # Root URL path
 auth_path: str = url_path('auth/')  # Authentication URL path
 academics_path: str = url_path('academics/')  # Academics URL path
 courses_path: str = url_path('courses/')  # Courses URL path
@@ -33,7 +33,8 @@ classes_path: str = url_path('classes/')  # Classes URL path
 # Define URL patterns
 urlpatterns: List[Callable] = [
     path(admin_path, admin.site.urls),  # Admin site URL
-    path(root_path, Index.as_view(), name='index'),  # Root URL for Index view
+    # path(root_path, Index.as_view(), name='index'),  # Root URL for Index view
+    path("", include("frontend.urls")),  # Include frontend URLs
     path(auth_path, include('authentication.urls')),  # Authentication app URLs
     path(academics_path, include('academics.urls')),  # Academics app URLs
     path(courses_path, include('courses.urls')),  # Courses app URLs

@@ -45,6 +45,7 @@ INSTALLED_APPS: list[str] = [
     'courses',
     'examinations',
     'notices',
+    'frontend',  # Frontend app for serving static files
 ]
 
 # Middleware for handling requests and responses
@@ -69,7 +70,7 @@ ROOT_URLCONF: str = 'backend.urls'
 TEMPLATES: list[dict] = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Template engine
-        'DIRS': [],  # Directories for custom templates
+        'DIRS': [BASE_DIR / "templates"],  # Directories for custom templates
         'APP_DIRS': True,  # Enable app directories for templates
         'OPTIONS': {
             'context_processors': [  # Context processors for templates
