@@ -1,10 +1,494 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block body %}
 <body>
-$END$
+
+{% include 'components/navbar.html' %}
+
+<div class="sm:ml-52 p-4">
+
+		<div class="flex items-center justify-between mb-6">
+			<div class="text-gray-600 text-xs flex self-start">
+				<a href="student-dashboard.html" class="flex items-center text-blue-600 hover:underline">
+					Dashboard
+				</a>
+				<span class="mx-2 text-gray-400">></span>
+				<span class="text-gray-800 font-medium">Profile</span>
+			</div>
+
+			<h1 class="text-xl font-bold text-center flex-grow">
+				Profile
+			</h1>
+		</div>
+		<div class="bg-white p-4 rounded-md shadow-md text-xs flex flex-col gap-4" id="profile-section">
+		</div>
+	</div>
+
+<script>
+    const profileData = [
+        {
+            label: 'Student Profile',
+            info: [
+                {
+                    label: 'Campus',
+                    value: 'Barasat',
+                    type: 'text',
+                },
+                {
+                    label: 'Student Code',
+                    value: 'BWU/BCA/23/406',
+                    type: 'text',
+                },
+                {
+                    label: 'University Email',
+                    value: 'bwubca23406@brainwareuniversity.ac.in',
+                    type: 'email',
+                },
+                {
+                    label: 'Batch Code',
+                    value: 'BCA-2023-SEC-G (Gr - 2)',
+                    type: 'text',
+                },
+                {
+                    label: 'First Name',
+                    value: 'RAHUL',
+                    type: 'text',
+                },
+                {
+                    label: 'Middle Name',
+                    value: '',
+                    type: 'text',
+                },
+                {
+                    label: 'Surname',
+                    value: 'DAS',
+                    type: 'text',
+                },
+                {
+                    label: 'Residence Phone',
+                    value: '',
+                    type: 'number',
+                },
+                {
+                    label: 'Mobile 1',
+                    value: '9775150082',
+                    type: 'number',
+                },
+                {
+                    label: 'Mobile 2',
+                    value: '9609337209',
+                    type: 'number',
+                },
+                {
+                    label: 'Blood Group',
+                    value: 'NA',
+                    type: 'select',
+                    options: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'NA'],
+                },
+                {
+                    label: 'Height',
+                    value: '0',
+                    type: 'number',
+                },
+                {
+                    label: 'Weight',
+                    value: '0',
+                    type: 'number',
+                },
+                {
+                    label: 'Date of Birth',
+                    value: '2004-10-21',
+                    type: 'date',
+                },
+                {
+                    label: 'Place of Birth',
+                    value: '',
+                    type: 'text',
+                },
+                {
+                    label: 'Career Goal',
+                    value: 'Software Engineer',
+                    type: 'text',
+                },
+                {
+                    label: 'Religion',
+                    value: 'Hinduism',
+                    type: 'select',
+                    options: ['Hinduism', 'Islam', 'Christianity', 'Buddhism', 'Judaism', 'Other'],
+                },
+                {
+                    label: 'Caste',
+                    value: 'General',
+                    type: 'text',
+                },
+                {
+                    label: 'Nationality',
+                    value: 'Indian',
+                    type: 'text',
+                },
+                {
+                    label: 'Major Disease',
+                    value: '',
+                    type: 'text',
+                },
+                {
+                    label: 'Why Choose This Course',
+                    value: 'Following My Passion',
+                    type: 'text',
+                },
+                {
+                    label: 'Student ABC ID',
+                    value: '299287290864',
+                    type: 'text',
+                },
+                {
+                    label: 'Hobby',
+                    value: 'Acting',
+                    type: 'checkbox',
+                    options: ["Acting", "Cooking", "Dance", "Drama", "Embroidery", "Indoor Game", "Movie", "Music", "Painting", "Photography", "Poem", "Tubbing"],
+                }
+            ]
+        },
+        {
+            label: 'Present Address Details',
+            info: [
+                {
+                    label: 'Present Address',
+                    value: 'KANKPUL, ASHOKENAGAR KALYANGARH (M) NORTH 24 PGS, WEST BENGAL 743272',
+                    type: 'textarea'
+                },
+                {
+                    label: 'City / Town',
+                    value: 'KANKPUL',
+                    type: 'text'
+                },
+                {
+                    label: 'Area',
+                    value: 'KALYANGARH',
+                    type: 'text'
+                },
+                {
+                    label: 'District (for W.B only)',
+                    value: 'North 24 Parganas',
+                    type: 'text'
+                },
+                {
+                    label: 'P.O',
+                    value: 'KANKPUL',
+                    type: 'text'
+                },
+                {
+                    label: 'P.S',
+                    value: 'ASHOKENAGAR',
+                    type: 'text'
+                },
+                {
+                    label: 'Aadhar Card No.',
+                    value: '331513203666',
+                    type: 'number'
+                },
+                {
+                    label: 'State',
+                    value: 'West Bengal',
+                    type: 'text'
+                },
+                {
+                    label: 'Pin',
+                    value: '743272',
+                    type: 'number'
+                }
+            ]
+        },
+        {
+            label: 'Permanent Address Details',
+            info: [
+                {
+                    label: 'Permanent Address',
+                    value: 'KANKPUL, ASHOKENAGAR KALYANGARH (M) NORTH 24 PGS, WEST BENGAL 743272',
+                    type: 'textarea'
+                },
+                {
+                    label: 'City / Town',
+                    value: 'KANKPUL',
+                    type: 'text'
+                },
+                {
+                    label: 'District (for W.B only)',
+                    value: 'North 24 Parganas',
+                    type: 'text'
+                },
+                {
+                    label: 'P.O',
+                    value: 'KANKPUL',
+                    type: 'text'
+                },
+                {
+                    label: 'P.S',
+                    value: 'ASHOKENAGAR',
+                    type: 'text'
+                },
+                {
+                    label: 'Aadhar Card No.',
+                    value: '331513203666',
+                    type: 'number'
+                },
+                {
+                    label: 'State',
+                    value: 'West Bengal',
+                    type: 'text'
+                },
+                {
+                    label: 'Pin',
+                    value: '743272',
+                    type: 'number'
+                }
+            ]
+        },
+        {
+            label: 'Contact Details',
+            info: [
+                {
+                    label: 'Email',
+                    value: 'rd21102004@gmail.com',
+                    type: 'email'
+                },
+                {
+                    label: 'FB Account No',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Whatsapp No',
+                    value: '9775150082',
+                    type: 'number'
+                }
+            ]
+        },
+        {
+            label: 'Qualification Details',
+            info: [
+                {
+                    label: 'Institution of Class X',
+                    value: 'KALYANGARH BIDHANCHANDRA VIDYAPITH',
+                    type: 'text'
+                },
+                {
+                    label: 'Board of Class X',
+                    value: 'WEST BENGAL BOARD',
+                    type: 'text'
+                },
+                {
+                    label: 'Medium of Class X',
+                    value: 'Bengali',
+                    type: 'text'
+                },
+                {
+                    label: 'Percentage of Class X',
+                    value: '91.14',
+                    type: 'number'
+                },
+                {
+                    label: 'Year of Passing',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Institution of Class XII',
+                    value: 'KALYANGARH VIDYAMANDIR',
+                    type: 'text'
+                },
+                {
+                    label: 'Board of Class XII',
+                    value: 'WEST BENGAL COUNCIL OF HIGHER SECONDARY EDUCATION',
+                    type: 'text'
+                },
+                {
+                    label: 'Medium of Class XII',
+                    value: 'Bengali',
+                    type: 'text'
+                },
+                {
+                    label: 'Percentage of Class XII',
+                    value: '82.2',
+                    type: 'number'
+                },
+                {
+                    label: 'Year of Passing',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Institution of Graduation',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Board of Graduation',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Medium of Graduation',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Percentage of Graduation',
+                    value: '0',
+                    type: 'number'
+                },
+                {
+                    label: 'Year of Passing',
+                    value: '',
+                    type: 'text'
+                }
+            ]
+        },
+        {
+            label: 'Guardian Details',
+            info: [
+                {
+                    label: 'Father\'s Name',
+                    value: 'Mr. PRADIP DAS',
+                    type: 'text'
+                },
+                {
+                    label: 'Father\'s Mobile',
+                    value: '9563066913',
+                    type: 'number'
+                },
+                {
+                    label: 'Father\'s E-Mail',
+                    value: 'pdas34563@gmail.com',
+                    type: 'email'
+                },
+                {
+                    label: 'Father\'s Profession',
+                    value: 'Self-employed',
+                    type: 'text'
+                },
+                {
+                    label: 'Mother\'s Name',
+                    value: 'Mrs. ARPITA DAS',
+                    type: 'text'
+                },
+                {
+                    label: 'Mother\'s Contact No',
+                    value: '9609337209',
+                    type: 'number'
+                },
+                {
+                    label: 'Mother\'s Profession',
+                    value: 'Housewife',
+                    type: 'text'
+                },
+                {
+                    label: 'Mother\'s E-Mail',
+                    value: 'pdas34563@gmail.com',
+                    type: 'email'
+                },
+                {
+                    label: 'No Of Brother(s)',
+                    value: '0',
+                    type: 'number'
+                },
+                {
+                    label: 'No Of Sister(s)',
+                    value: '0',
+                    type: 'number'
+                },
+                {
+                    label: 'Hostel Border',
+                    value: '',
+                    type: 'radio',
+                    options: ['Yes', 'No']
+                }
+            ]
+        },
+        {
+            label: 'Local Guardian Details',
+            info: [
+                {
+                    label: 'Local Guardian Name',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Local Guardian Contact',
+                    value: '',
+                    type: 'text'
+                },
+                {
+                    label: 'Local Guardian Mobile',
+                    value: '',
+                    type: 'number'
+                }
+            ]
+        }
+    ];
+
+    function renderProfile() {
+        const profileSection = document.querySelector('#profile-section');
+        profileSection.innerHTML = profileData.map(item => {
+            return `
+        <div>
+            <div class="text-base pb-2">
+                ${item.label}
+            </div>
+            <hr />
+            <div class="grid grid-cols-2 gap-4 p-4 mt-2">
+                ${item.info.map(info => {
+                return `
+                        <div class="grid grid-cols-1 ${info.type === 'checkbox' ? 'col-span-2' : ''} gap-4 items-center">
+                            <div>
+                                ${info.label}:
+                            </div>
+                            ${info.type === 'select' ?
+                        `<select class="border border-gray-300 rounded-sm text-xs py-1 px-1.5 focus:outline-none focus:ring-0" value="${info.value}" disabled>
+                                    ${info.options.map(option => {
+                            return `<option value="${option}" ${option === info.value && 'selected'}>${option}</option>`
+                        }).join('')}
+                                </select>`
+                        : info.type === 'checkbox' ? `
+                        <div class="flex items-center gap-3 flex-wrap">
+                            ${info.options.map(option => {
+                            return `<div class="flex items-center gap-1">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" ${info.value.includes(option) && 'checked'} disabled>
+                                    <label class="text-xs">${option}</label>
+                                </div>`
+                        }).join('')}
+                        </div>
+                        `
+                            : `<input type="${info.type}"
+                        class="border border-gray-300 rounded-sm text-xs py-1 px-1.5 focus:outline-none focus:ring-0"
+                        value="${info.value}"
+                        readonly />`
+                    }
+                        </div>
+                    `;
+            }).join('')}
+            </div>
+        </div>
+    `;
+        }).join('');
+    }
+
+    // Initialize the sidebar when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        renderProfile();
+        // Re-initialize Flowbite components after dynamic rendering
+        if (window.initFlowbite) window.initFlowbite();
+    });
+
+</script>
+
 </body>
-</html>
+
+
+{% endblock %}

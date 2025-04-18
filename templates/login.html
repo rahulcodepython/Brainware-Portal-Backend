@@ -1,26 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
+{% load static %}
 
-<body>
-    <form action="{% url 'login_template' %}" method="post">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <a href="{% url 'home_template' %}">
-            <button type="submit">Login</button>
-        </a>
+{% block title %}
+	Login Page
+{% endblock %}
 
-    </form>
+{% block body %}
+
+<body class="h-screen w-screen flex items-center justify-center bg-cover bg-center"
+	style="background-image: url('{% static 'images/Brainware-university.jpg' %}');">
+
+	<div
+		class="flex flex-col gap-4 items-center justify-center px-6 py-8 container mx-auto sm:max-w-lg md:h-screen lg:py-0 w-full">
+		<div
+			class="flex items-center justify-center gap-4 px-6 py-2 bg-white/70 backdrop-blur-md rounded-lg shadow-lg w-full text-sm sm:text-base md:text-lg lg:text-2xl">
+			<img class="w-8 sm:w-10 h-8 sm:h-10" src="{% static 'images/logo.png' %}" alt="logo">
+			<h2 class="text-black font-bold">Brainware University</h2>
+		</div>
+		<div class="bg-white/70 0 backdrop-blur-md rounded-lg shadow-lg xl:p-0 w-full">
+			<div class="p-4 space-y-4 md:space-y-6 sm:p-8">
+				<h1 class="text-base font-bold text-center text-black md:text-2xl">
+					Log In
+				</h1>
+				<form class="space-y-4 md:space-y-6" action="{% url 'login' %}" method="POST">
+					{% csrf_token %}
+					<div>
+						<input type="text" name="std-code" id="std-code"
+							class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none block w-full p-2.5"
+							placeholder="Student Code: BWU/****/**/***" required>
+					</div>
+					<div class="relative">
+						<input type="password" name="password" id="password" placeholder="Password: ••••••••"
+							class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none block w-full p-2.5"
+							required>
+						<span class="absolute right-3 top-3 cursor-pointer text-gray-500" onclick="togglePassword()">
+							<i id="eyeIcon" class="fas fa-eye"></i>
+						</span>
+					</div>
+
+					<a href="{% url 'dashboard_template' %}" class="w-full text-base md:text-lg text-white bg-[#2563eb] hover:bg-blue-700 transition duration-300 ease-in-out font-medium rounded-lg px-5 py-2.5 text-center">
+						log in
+					</a>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function togglePassword() {
+			let passwordField = document.getElementById("password");
+			let eyeIcon = document.getElementById("eyeIcon");
+
+			if (passwordField.type === "password") {
+				passwordField.type = "text";
+				eyeIcon.classList.remove("fa-eye");
+				eyeIcon.classList.add("fa-eye-slash");
+			} else {
+				passwordField.type = "password";
+				eyeIcon.classList.remove("fa-eye-slash");
+				eyeIcon.classList.add("fa-eye");
+			}
+		}
+	</script>
 </body>
 
-</html>
+{% endblock %}

@@ -51,8 +51,8 @@ INSTALLED_APPS: list[str] = [
 # Middleware for handling requests and responses
 MIDDLEWARE: list[str] = [
     # WhiteNoise for serving static files
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',  # Security enhancements
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',  # Session handling
     'corsheaders.middleware.CorsMiddleware',  # CORS handling
     'django.middleware.common.CommonMiddleware',  # Common middleware
@@ -114,7 +114,8 @@ USE_TZ: bool = True  # Enable timezone support
 # Static files settings
 STATIC_URL: str = '/static/'  # URL for serving static files
 # Directory for collecting static files
-STATIC_ROOT: Path = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT: Path = BASE_DIR / "staticfiles"
+
 # Storage backend for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
